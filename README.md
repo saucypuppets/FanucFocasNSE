@@ -1,20 +1,15 @@
 # FanucFocasNSE
-`fanuc-focas-enum.nse` enumerates a Fanuc CNC controller exposing FOCAS 2
-over Ethernet, normally on TCP/8193.
+`fanuc-focas-enum.nse` enumerates a Fanuc CNC controller exposing FOCAS over Ethernet, normally on TCP/8193.
 
-The script performs read-only queries and reports:
+The script performs read-only queries with raw packets:
 
-- Session channels used for controller communication.
 - Controller model, family, version, and axis information.
 - Run, mode, alarm, emergency, and edit status.
 - Current alarm flags and active alarm messages.
 - Active program details.
-- Program directory entries.
+- Lists all programs accesible in CNC_MEM
 
-The implementation is intentionally narrow: it focuses on common Ethernet
-FOCAS inventory and status data, and avoids write, control, upload, download,
-and delete operations. Some payload layouts vary by controller family, so
-the script decodes status fields defensively.
+Developed against a bare-bones 0i-MD control. Needs validation against additional families of CNC control, Data Server, and FAST ethernet cards. 
 
 Useful arguments:
 
