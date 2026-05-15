@@ -83,7 +83,7 @@ local FRAME_READ_REPLY = 0x2102
 
 -- Read query identifiers used below.
 local QUERY_MACHINE_PROFILE  = 0x0018
-local QUERY_RUNTIME_STATE    = 0x0019   -- state bundle: 0x0019 + 0x00E1 + 0x0098
+local QUERY_RUNTIME_STATE    = 0x0019 
 local QUERY_ALARM_FLAGS      = 0x001A
 local QUERY_ACTIVE_PROGRAMS  = 0x001C
 local QUERY_SEQUENCE_NUMBER  = 0x001D
@@ -196,11 +196,22 @@ end
 -- Socket / framing helpers (each used by multiple call sites)
 -- ---------------------------------------------------------------------------
 
--- Per-socket leftover buffers. nmap's sock:receive_bytes(n) reads AT LEAST
--- n bytes (not at most), so a single call can return the entire FOCAS frame
--- when the server sends header+body in one TCP segment (common on CNC
--- simulators and fast LAN). Without buffering the over-read, the next
--- recv_exact would block forever waiting for bytes that already arrived.
+-- Responses from the CNC control contains two layers: a 10 byte outer frame header
+-- which also contains the length of the following payload of information. 
+-- We're reading the response from the CNC via NMAP, and our request for the payload
+-- from NMAP happens asynchonously from the request. If the CNC returned information 
+-- really fast, NMAP may hand us more information than what the outer layer says to 
+-- expect. If we hard-code our parser to only take what the outer frame header
+-- says to expect, we may miss additional information. 
+-- Without recv_exact and recv_leftover, the script can get stuck like this:
+-- 1. Ask for 10 bytes.
+-- 2. Nmap returns 46 bytes.
+-- 3. Script parses first 10 as header.
+-- 4. Script asks for 36-byte payload.
+-- 5. But those 36 bytes were already returned in step 2.
+-- 6. Script waits forever or times out.
+
+--Creates a table which is used later to store all the data sent by the response.
 local recv_leftover = setmetatable({}, { __mode = "k" })
 
 local function recv_exact(sock, n)
@@ -282,7 +293,6 @@ end
 --   [22] arg4                  (int32)
 --   [26] arg5                  (int32)
 --
--- Most simple reads leave args 1..5 = 0.
 -- ---------------------------------------------------------------------------
 
 local function pack_envelope(query_id, args)
