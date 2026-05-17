@@ -65,7 +65,7 @@ It never sends write or control requests.
 -- |     O1994      4500 B  (OPEN BORE 130.2 CHAMFER)
 -- |_    ...
 
-categories = {"discovery", "safe", "version"}
+categories = {"discovery", "intrusive", "version"}
 author = "saucypuppets"
 license = "Same as Nmap--See https://nmap.org/book/man-legal.html"
 
