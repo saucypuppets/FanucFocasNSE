@@ -11,7 +11,8 @@ The script performs read-only queries with raw packets:
 Developed against a bare-bones 0i-MD control. Needs validation against additional families of CNC control, Data Server, and FAST ethernet cards. 
 
 Example output:
-`PORT     STATE SERVICE REASON         VERSION
+```
+PORT     STATE SERVICE REASON         VERSION
 8193/tcp open  focas   syn-ack ttl 64 Fanuc FOCAS 2 (Ethernet) 0i-MD (series D4F1, version 37.0)
 | focas-info: 
 |   System: 
@@ -76,7 +77,8 @@ Example output:
 |       O8000    2000 B  (FANUCT20 48 HOUR TEST)
 |       O8989     500 B  (WARM UP)
 |       O9004     500 B  (T24 TOOL CHANGE)
-|_      O9014     500 B  ()`
+|_      O9014     500 B  ()
+```
 
 
 
