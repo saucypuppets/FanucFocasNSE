@@ -89,7 +89,7 @@ sends write or control requests.
 --   </table>
 -- </table>
 
-author = "saucypuppets"
+author = "Tobin Weltin"
 license = "Same as Nmap--See https://nmap.org/book/man-legal.html"
 categories = {"discovery", "version"}
 
