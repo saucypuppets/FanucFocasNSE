@@ -174,9 +174,9 @@ local RUN_LABELS_MODERN = {
 -- Series 15/15i run state -- offset by 1 from modern, plus higher codes for
 -- restart/search/HPCC states modern controllers report differently.
 local RUN_LABELS_SERIES15 = {
-  [0]="STOP", [1]="HOLD", [2]="START", [3]="MSTR (jog mdi)",
-  [4]="ReSTaRt", [5]="PRSR (program restart)", [6]="NSRC (seq search)",
-  [7]="ReSTaRt (blinking)", [8]="ReSET", [13]="HPCC",
+  [0]="STOP", [1]="HOLD", [2]="START", [3]="MSTR (jog/MDI)",
+  [4]="RESTART", [5]="PRSR (program restart)", [6]="NSRC (sequence search)",
+  [7]="RESTART (blinking)", [8]="RESET", [13]="HPCC",
 }
 
 local MOTION_LABELS = {
