@@ -773,7 +773,6 @@ action = function(host, port)
 
   port.state = "open"
   port.version.name = "focas"
-  port.version.name_confidence = 10
   port.version.product = "Fanuc FOCAS 2 (Ethernet)"
   port.version.devicetype = "specialized"
 
@@ -783,7 +782,7 @@ action = function(host, port)
   out["Active Program"] = read_active_program(sock2)
   out["Programs"]       = read_programs(sock2)
 
-  nmap.set_port_version(host, port, "hardmatched")
+  nmap.set_port_version(host, port)
   nmap.set_port_state(host, port, "open")
   close_control_channel(sock2)
   close_control_channel(sock1)
